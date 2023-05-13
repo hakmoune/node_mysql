@@ -8,32 +8,30 @@ const connection = mysql.createConnection({
 });
 
 connection.connect(error => {
+  // Connect to the database
   if (error) {
     throw error;
   }
-
   console.log("Connected to the database!");
 
-  const sql = `
-    CREATE TABLE IF NOT EXISTS Cities (
-      id INT AUTO_INCREMENT PRIMARY KEY,
-      name VARCHAR(255),
-      country VARCHAR(255)
-    )
+  // Execute the SQL Query
+  const sql = `INSERT INTO cities (name, country) VALUES 
+    ("New York", "USA"),
+    ("London", "UK"),
+    ("Paris", "France");
   `;
 
   connection.query(sql, (error, result) => {
     if (error) {
       throw error;
     }
+    console.log(result.affectedRows + " Data is inserted successfully!");
 
-    console.log("Table created successfully!");
-
+    // Close the Connection to the Database
     connection.end(error => {
       if (error) {
         throw error;
       }
-
       console.log("Connection closed.");
     });
   });
